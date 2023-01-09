@@ -1,0 +1,139 @@
+use emarket;
+/*Consignas*/
+/*CATEGORIAS Y PRODUCTOS*/
+/*1. Queremos tener un listado de todas las categorías.*/
+select *
+from categorias;
+
+/*2. Cómo las categorías no tienen imágenes, solamente interesa obtener un
+listado de CategoriaNombre y Descripcion.*/
+select CategoriaNombre, Descripcion
+from categorias;
+
+/*3. Obtener un listado de los productos.*/
+select *
+from productos;
+/*4. ¿Existen productos discontinuados? (Discontinuado = 1).*/
+select ProductoNombre, Discontinuado
+from productos
+where Discontinuado = 1;
+
+/*5. Para el viernes hay que reunirse con el Proveedor 8. ¿Qué productos son
+los que nos provee?*/
+select ProveedorID, ProductoID, ProductoNombre
+from productos 
+where ProveedorID = 8;
+
+/*6. Queremos conocer todos los productos cuyo precio unitario se encuentre
+entre 10 y 22.*/
+select ProductoID, ProductoNombre, PrecioUnitario 
+from productos 
+where PrecioUnitario BETWEEN 10 AND 22;
+
+/*7. Se define que un producto hay que solicitarlo al proveedor si sus unidades
+en stock son menores al Nivel de Reorden. ¿Hay productos por solicitar?*/
+select ProductoNombre, UnidadesStock, NivelReorden
+from productos 
+where UnidadesStock < NivelReorden;
+
+/*8. Se quiere conocer todos los productos del listado anterior, pero que
+unidades pedidas sea igual a cero.*/
+select ProductoNombre, UnidadesStock, NivelReorden, UnidadesPedidas
+from productos 
+where UnidadesStock < NivelReorden AND UnidadesPedidas = 0;
+
+/*CLIENTES
+1. Obtener un listado de todos los clientes con Contacto, Compania, Título,
+País. Ordenar el listado por País.*/ /*select *
+from clientes*/
+
+select ClienteID, Contacto, Compania, Titulo, Pais 
+from clientes
+order by pais;
+
+/*2. Queremos conocer a todos los clientes que tengan un título “Owner”.*/
+
+select clienteID, titulo 
+from clientes
+where titulo LIKE '%Owner%';
+
+/*3. El operador telefónico que atendió a un cliente no recuerda su nombre.
+Solo sabe que comienza con “C”. ¿Lo ayudamos a obtener un listado con
+todos los contactos que inician con la letra “C”?*/
+
+select ClienteID, Contacto, Telefono
+from clientes
+where Contacto LIKE 'C%';
+
+/*FACTURAS
+1. Obtener un listado de todas las facturas, ordenado por fecha de factura
+ascendente.*/
+
+select FacturaID, FechaFactura
+from facturas 
+order by FechaFactura asc;
+
+/*2. Ahora se requiere un listado de las facturas con el país de envío “USA” y
+que su correo (EnvioVia) sea distinto de 3.*/
+
+select FacturaID, EnvioVia, PaisEnvio 
+from facturas 
+where PaisEnvio Like '%USA%' AND EnvioVia != 3;
+/*3. ¿El cliente 'GOURL' realizó algún pedido?*/
+
+select ClienteID, FacturaID
+from facturas 
+where ClienteID LIKE '%GOURL%';
+
+/*4. Se quiere visualizar todas las facturas de los empleados 2, 3, 5, 8 y 9.*/
+select EmpleadoID, FacturaID
+from facturas
+where EmpleadoID in  (2, 3, 5, 8, 9);
+
+/*Consultas queries ML - Parte II
+En esta segunda parte vamos a intensificar la práctica de consultas
+SELECT, añadiendo ALIAS, LIMIT y OFFSET.*/
+
+/*PRODUCTOS 
+1. Obtener el listado de todos los productos ordenados
+descendentemente por precio unitario.*/
+
+select ProductoNombre, PrecioUnitario
+from productos
+order by PrecioUnitario desc;
+
+/*2. Obtener el listado de top 5 de productos cuyo precio unitario es
+el más caro.*/
+select ProductoNombre, PrecioUnitario
+from productos
+order by PrecioUnitario desc
+limit 5;
+
+/*3. Obtener un top 10 de los productos con más unidades en stock.*/
+select ProductoNombre, UnidadesStock 
+from productos
+order by UnidadesStock desc
+limit 10;
+
+/*FACTURADETALLE
+1. Obtener un listado de FacturaID, Producto, Cantidad.*/
+select FacturaID, ProductoID, Cantidad
+from facturadetalle;
+
+/*2. Ordenar el listado anterior por cantidad descendentemente.*/
+select FacturaID, ProductoID, Cantidad
+from facturadetalle
+order by Cantidad desc;
+
+/*3. Filtrar el listado solo para aquellos productos donde la cantidad
+se encuentre entre 50 y 100.*/
+select FacturaID, ProductoID, Cantidad
+from facturadetalle
+where Cantidad BETWEEN 50 and 100
+order by Cantidad asc;
+
+/*4. En otro listado nuevo, obtener un listado con los siguientes
+nombres de columnas: NroFactura (FacturaID), Producto
+(ProductoID), Total (PrecioUnitario*Cantidad).*/
+select FacturaID as NroFactura, ProductoID as producto, COUNT(PrecioUnitario*Cantidad) as total
+from facturadetalle;

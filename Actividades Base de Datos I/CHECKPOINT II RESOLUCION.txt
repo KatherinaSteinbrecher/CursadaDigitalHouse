@@ -1,0 +1,120 @@
+use la_aprobacion;
+/*1. Listar todos los huéspedes cuyo nombre comience con la letra "S". Se debe
+mostrar id como "Número de huésped", apellido y nombre.*/
+select id as 'Numero de huesped', nombre, apellido
+from huesped
+where nombre LIKE 'S%';
+
+/*2. Mostrar el número de legajo del empleado con domicilio "Av. Rosalind Franklin
+600".*/
+select nombre, domicilio, legajo
+from empleado
+where domicilio LIKE '%Av. Rosalind Franklin 600%';
+/*3. Se requiere saber cuál es el mayor importe registrado en las reservas.*/
+select max(importe)
+from reserva;
+/*4. Listar las reservas realizadas con números 15, 19, 21, 35.*/
+select huesped_id, id 
+from reserva
+where id in (15, 19, 21, 35)
+order by id asc;
+
+/*5. Calcular el importe total recaudado para la habitación número 40. El reporte
+debe tener dos columnas denominadas "Número de habitación " y el "Importe
+Total".*/
+select habitacion_numero as 'Número de habitación', sum(importe) as 'Importe Total'
+from checkin
+where habitacion_numero = 40;
+/*6. Listar de manera ordenada (fecha de nacimiento), los empleados que no
+pertenezcan al sector 3 y que la fecha de nacimiento sea mayor que 3/9/1989 o
+igual a 7/11/1986.*/
+select nombre, apellido, fecha_nacimiento, sector_id
+from empleado
+where sector_id != 3 AND(fecha_nacimiento > '1989-09-03' or fecha_nacimiento = '1986-11-07')
+order by fecha_nacimiento;
+
+/*7. Listar los importes de las reservas con valor entre $10499,50 a $12000,00
+(ordenarlos por el importe de mayor a menor).*/
+select id, importe 
+from reserva
+where importe BETWEEN 10499.00 and 12000.00
+order by importe desc;
+
+/*8. Mostrar el quinto importe del check-in realizado con menor valor.*/
+select id, importe
+from checkin 
+order by importe asc 
+limit 5;
+/*9. Mostrar el check-in con mayor importe. Este reporte debe contener el número
+del check-in, fecha de entrada y el importe.*/
+select id, fecha_entrada, importe
+from checkin
+order by importe desc 
+limit 1;
+
+/*10. Mostrar las diez reservas con menor importe. Este reporte debe contener el
+número de reserva, importe y el número del servicio.*/
+select id as 'Numero de reserva', servicio_extra_id as 'Numero de servicio', importe
+from reserva
+order by importe asc
+limit 10;
+
+/*11. Listar las reservas registradas entre 14/07/21 al 15/08/21 (ordenarlos por fecha)*/
+select id, fecha 
+from reserva 
+where  fecha BETWEEN '2021-07-14' and '2021-08-15'
+order by fecha;
+
+/*12. Listar en forma ordenada los check-in que tengan un importe superior o igual a
+$34125,00 y con fecha de salida inferior a 26/6/2020.*/
+select id, fecha_salida, importe
+from checkin
+where importe >= 34125.00 AND fecha_salida < '2020-06-26'
+order by id;
+
+/*13) Listar todos los empleados cuyo nombre termine con los caracteres "ia". Se debe
+mostrar el legajo, apellido, nombre y teléfono móvil.*/
+select legajo, apellido, nombre, telefono_movil
+from empleado 
+where nombre LIKE '%ia';
+
+/*14. Se desea conocer cuál es el importe promedio de las reservas que se hayan
+pagado en efectivo.*/
+select  AVG(importe), forma_pago_id
+from reserva 
+where forma_pago_id = 1;
+
+/*15. Mostrar el tercer check-in con mayor importe pagado con tarjeta de crédito.*/
+select id, importe,forma_pago_id 
+from checkin
+where forma_pago_id = 3
+order by importe desc
+limit 3;
+/*16. Calcular la cantidad de check-in que tiene la habitación número siete. El reporte
+debe tener dos columnas denominadas "Habitación" y el "Cantidad".*/
+select habitacion_numero as 'Habitacion', COUNT(*) as 'Cantidad'
+from checkin
+where habitacion_numero = 7;
+
+/*17. Mostrar todos los domicilios de los huéspedes que contengan una palabra de
+cinco caracteres, pero el tercer carácter debe ser igual a "n".*/
+select domicilio 
+from huesped 
+where domicilio like '_%_%n_%_';
+
+
+/*18. Modificar el tipo de decoración "italiana" por "romana"*/
+update decoracion
+SET Italiana = 'Romana'
+where nombre;
+
+/*19. Agregar al huésped Palermo Díaz Ricardo Omar cuyo pasaporte es 28001555 y
+fecha de nacimiento 5/1/1980, domiciliado en calle Av. Sarmiento 752 este -
+Argentina, teléfono móvil +542645667714 y el correo electrónico es
+pal1980sj@gmail.com.*/
+insert into huesped(apellido, nombre, pasaporte, fecha_nacimiento, domicilio, pais_id, telefono_movil, email)
+value ("Palermo Díaz", "Ricardo Omar", 28001555, "1980-01-05", "calle Av. Sarmiento 752 este", 1, +542645667714, "pal1980sj@gmail.com");
+
+/*20. Eliminar el registro del servicio básico número 5*/
+delete from servicio_basico
+where id = 5;
