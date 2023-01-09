@@ -1,2 +1,2 @@
 # CursadaDigitalHouse
-En este repositorio se subiran las actividades que se trabajaron durante la carrera. 
+En este repositorio se econtraran las actividades que se trabajaron durante la carrera. 
