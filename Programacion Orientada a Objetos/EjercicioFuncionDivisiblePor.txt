@@ -1,0 +1,33 @@
+Ejercitación Funciones
+Ejercicio 1
+Hacer una función que reciba como parámetro dos valores y devuelva un boolean. La
+función debe comprobar si el primer número es divisible por el segundo.
+boolean esDivisible(int n, int divisor)
+NOTA: Que sea divisible quiere decir que al dividir da un valor exacto, es decir, sin
+decimales.
+
+package org.example;
+
+public class Main {
+    public static boolean esDivisible(int num1, int num2) {
+        if (num1 % num2 == 0) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
+    public static void main(String[] args) {
+ int n1= 4;
+ int n2= 2;
+
+ if (esDivisible(n1,n2))
+     System.out.println(n1+ "es divisible por" + n2);
+
+ else {
+     System.out.println(n1+ " No es divisible por" + n2);
+ }
+
+    }
+}

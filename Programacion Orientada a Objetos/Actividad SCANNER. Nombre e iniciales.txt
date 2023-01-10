@@ -1,0 +1,32 @@
+/* Ejercitación Ingreso de datos
+
+ Objetivo:
+ El objetivo es poder practicar el uso de la sintaxis del lenguaje de programación Java.
+ Ejercicio 1:
+ Ingresá tu nombre y tu apellido por separado, a partir de estas variables debés obtener en
+ una tercera tus iniciales.*/
+
+package org.example;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String nombre, apellido;
+        String iniciales;
+
+        System.out.println("Ingrese su Nombre");
+        nombre = scanner.nextLine();
+
+        System.out.println("Ingrese su Apellido");
+        apellido = scanner.nextLine();
+        /*El 'nextLine()' permite que el usuario cargue los datos solicitados*/
+
+        iniciales="" + nombre.charAt(0) + apellido.charAt(0);
+        /* con nombre.charAt() trabajamos la INICIAL y con el cero (0) marcamos la posicion, que como estamos hablando de una inicial este nos las marca.*/
+        /* Al agregar una cadena vacia -> " " + .... lo que hacemos es convertir toda la suma en string, es decir que se concatenara*/
+
+
+
+    }
